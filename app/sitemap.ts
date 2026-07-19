@@ -5,6 +5,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: SITE_URL, priority: 1 },
     { url: `${SITE_URL}/privacy`, priority: 0.5 },
+    { url: `${SITE_URL}/terms`, priority: 0.5 },
     { url: `${SITE_URL}/delete-account`, priority: 0.5 },
+    { url: `${SITE_URL}/acceptable-use`, priority: 0.5 },
   ];
 }

@@ -48,7 +48,9 @@ export function SiteFooter() {
             <div className="col">
               <h4>Legal</h4>
               <Link href="/privacy">Privacy policy</Link>
+              <Link href="/terms">Terms of Service</Link>
               <Link href="/delete-account">Delete your account</Link>
+              <Link href="/acceptable-use">Acceptable Use Policy</Link>
             </div>
             <div className="col">
               <h4>Contact</h4>
