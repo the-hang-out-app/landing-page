@@ -34,6 +34,9 @@ yarn-error.log*
 .env*
 !.env.example
 
+# internal spec / planning docs (local only, not repo content)
+/prd.md
+
 # vercel
 .vercel
 
