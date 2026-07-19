@@ -11,6 +11,12 @@ import { contactSchema } from "@/lib/contact-schema";
 export function SignupForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const [error, setError] = useState<string | null>(null);
+  const [emailValue, setEmailValue] = useState("");
+
+  function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setEmailValue(event.currentTarget.value);
+    if (error) setError(null);
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -54,7 +60,7 @@ export function SignupForm() {
 
   if (status === "sent") {
     return (
-      <p className="signup-ok reveal in">
+      <p className="signup-ok reveal in" role="status" aria-live="polite">
         {"You're on the list — we'll only email you when it matters."}
       </p>
     );
@@ -62,24 +68,36 @@ export function SignupForm() {
 
   return (
     <>
-      <form className="signup reveal d3" onSubmit={handleSubmit} noValidate>
+      <form
+        className="signup reveal d3"
+        onSubmit={handleSubmit}
+        noValidate
+        aria-busy={status === "sending"}
+      >
         <input
           type="email"
+          id="waitlist-email"
           name="email"
+          value={emailValue}
+          onChange={handleEmailChange}
           placeholder="you@email.com"
           aria-label="Email address"
           aria-invalid={Boolean(error)}
+          aria-describedby={error ? "signup-error" : undefined}
           autoComplete="email"
+          inputMode="email"
           required
         />
-        {/* Honeypot — hidden from real users, tempting to bots. */}
+        {/* Honeypot — hidden from real users, tempting to bots. Uses a
+            clip-based visually-hidden pattern (not left:-9999px, which can
+            trigger horizontal overflow on mobile browsers). */}
         <input
           type="text"
           name="company"
           tabIndex={-1}
           autoComplete="off"
           aria-hidden="true"
-          style={{ position: "absolute", left: -9999, width: 1, height: 1 }}
+          className="hp"
         />
         <button
           className="btn btn-primary"
@@ -90,7 +108,7 @@ export function SignupForm() {
         </button>
       </form>
       {error && (
-        <p className="signup-err" role="alert">
+        <p id="signup-error" className="signup-err" role="alert">
           {error}
         </p>
       )}

@@ -1012,14 +1012,31 @@ html:not(.js) .matchcallout {
   max-width: 520px;
 }
 .signup {
+  position: relative;
   display: flex;
   gap: 10px;
   max-width: 480px;
   margin: 36px auto 0;
 }
+/* honeypot: visually hidden, stays within bounds (no off-screen overflow) */
+.signup .hp {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  opacity: 0;
+  pointer-events: none;
+}
 .signup input {
   flex: 1;
   height: 56px;
+  min-height: 56px;
   border-radius: 15px;
   border: 1.5px solid var(--line);
   background: #fff;
@@ -1039,6 +1056,7 @@ html:not(.js) .matchcallout {
 }
 .signup .btn-primary {
   height: 56px;
+  min-height: 56px;
   padding: 0 26px;
   white-space: nowrap;
 }
@@ -1073,8 +1091,10 @@ html:not(.js) .matchcallout {
   .signup {
     flex-direction: column;
   }
+  .signup input,
   .signup .btn-primary {
-    height: 54px;
+    height: 56px;
+    min-height: 56px;
   }
 }
 
