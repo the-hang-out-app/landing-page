@@ -49,6 +49,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${roboto.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       {/* suppressHydrationWarning: extensions (e.g. ColorZilla) inject attributes on <body> */}

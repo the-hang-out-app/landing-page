@@ -1,6 +1,17 @@
 import Link from "next/link";
+import {
+  InstagramLogo,
+  TiktokLogo,
+  XLogo,
+} from "@phosphor-icons/react/dist/ssr";
 import { LensMark } from "@/components/landing-bits";
-import { CONTACT_EMAIL, GITHUB_ORG_URL, SITE_URL } from "@/lib/config";
+import { CONTACT_EMAIL, SITE_URL, SOCIAL_LINKS } from "@/lib/config";
+
+const SOCIALS = [
+  { label: "Instagram", href: SOCIAL_LINKS.instagram, Icon: InstagramLogo },
+  { label: "TikTok", href: SOCIAL_LINKS.tiktok, Icon: TiktokLogo },
+  { label: "X (Twitter)", href: SOCIAL_LINKS.x, Icon: XLogo },
+];
 
 export function SiteFooter() {
   return (
@@ -42,14 +53,24 @@ export function SiteFooter() {
             <div className="col">
               <h4>Contact</h4>
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-              <a href={GITHUB_ORG_URL} rel="noopener noreferrer">
-                GitHub
-              </a>
+              <div className="socials">
+                {SOCIALS.map(({ label, href, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    aria-label={label}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon size={22} weight="regular" aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
         <div className="bottom">
-          <span>© 2026 hang:out · Made for Android</span>
+          <span>© {new Date().getFullYear()} hang:out · Made for Android</span>
           <span>
             <a href={SITE_URL} style={{ color: "inherit" }}>
               the.hang-out.app

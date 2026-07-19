@@ -1108,6 +1108,31 @@ footer .col a {
 footer .col a:hover {
   color: var(--slate);
 }
+footer .socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+footer .col .socials a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  border-radius: 10px;
+  color: var(--sub);
+  border: 1px solid var(--line);
+  transition:
+    color 0.2s,
+    background 0.2s,
+    border-color 0.2s;
+}
+footer .col .socials a:hover {
+  color: var(--royal);
+  border-color: var(--soft-lavender);
+  background: var(--lav-wash);
+}
 footer .brandcol {
   max-width: 300px;
 }
@@ -1117,16 +1142,32 @@ footer .brandcol p {
   margin: 14px 0 0;
 }
 footer .bottom {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 44px;
   padding-top: 24px;
-  border-top: 1px solid var(--line-soft);
   font-size: 13.5px;
   color: var(--faint);
   flex-wrap: wrap;
   gap: 12px;
+}
+/* brand-gradient divider between the quick links and the copyright row */
+footer .bottom::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--royal) 0%,
+    var(--lav) 50%,
+    var(--coral) 100%
+  );
 }
 .cols {
   display: flex;
