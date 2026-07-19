@@ -773,3 +773,239 @@ export function MakePlan() {
     </Screen>
   );
 }
+
+// ── Plan detail / RSVP (flex-plan.jsx) ──────────────────────────────────────
+function StatusChip({
+  kind,
+  children,
+}: {
+  kind: "free" | "busy" | "next";
+  children: ReactNode;
+}) {
+  const map = {
+    free: { bg: FX.lavWash, fg: FX.plumDeep },
+    next: { bg: FX.lavWash, fg: FX.plumDeep },
+    busy: { bg: FX.mist, fg: FX.faint },
+  } as const;
+  const c = map[kind];
+  return (
+    <span
+      style={{
+        fontSize: 12.5,
+        fontWeight: 700,
+        color: c.fg,
+        background: c.bg,
+        borderRadius: 8,
+        padding: "4px 10px",
+      }}
+    >
+      {children}
+    </span>
+  );
+}
+
+function AttendeeRow({
+  initial,
+  bg,
+  fg,
+  name,
+  state,
+}: {
+  initial: string;
+  bg: string;
+  fg: string;
+  name: string;
+  state: "going" | "maybe" | "pending";
+}) {
+  const map = {
+    going: { label: "Going", kind: "free" as const },
+    maybe: { label: "Maybe", kind: "next" as const },
+    pending: { label: "Invited", kind: "busy" as const },
+  };
+  const s = map[state];
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0" }}>
+      <Avatar initial={initial} bg={bg} fg={fg} size={40} />
+      <span style={{ flex: 1, fontSize: 15.5, fontWeight: 600 }}>{name}</span>
+      <StatusChip kind={s.kind}>{s.label}</StatusChip>
+    </div>
+  );
+}
+
+export function PlanDetail() {
+  const detailRows: [string, string, string][] = [
+    ["calendar", "Sat · Jun 7", "11:00 a.m."],
+    ["map", "Café Lune", "Downtown"],
+    ["user", "Hosted by Maya", "You"],
+  ];
+  const rsvp: [string, boolean][] = [
+    ["Going", true],
+    ["Maybe", false],
+    ["Can't", false],
+  ];
+  return (
+    <div
+      style={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        background: FX.cream,
+        fontFamily: FX.font,
+        color: FX.charcoal,
+      }}
+    >
+      <div
+        style={{
+          flex: 1,
+          overflow: "hidden",
+          padding: "62px 24px 0",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: "50%",
+              background: FX.white,
+              border: `1px solid ${FX.line}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Icon
+              name="chevron"
+              size={18}
+              stroke={FX.charcoal}
+              style={{ transform: "scaleX(-1)" }}
+            />
+          </div>
+          <div style={{ flex: 1 }} />
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: "50%",
+              background: FX.white,
+              border: `1px solid ${FX.line}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Icon name="link" size={18} stroke={FX.charcoal} />
+          </div>
+        </div>
+        <div style={{ fontSize: 30, fontWeight: 700, letterSpacing: -0.8, marginBottom: 16 }}>
+          Saturday brunch
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 22 }}>
+          {detailRows.map((r) => (
+            <div key={r[1]} style={{ display: "flex", alignItems: "center", gap: 13 }}>
+              <div
+                style={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: 10,
+                  background: FX.white,
+                  border: `1px solid ${FX.line}`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Icon name={r[0]} size={19} stroke={FX.charcoal} />
+              </div>
+              <span style={{ flex: 1, fontSize: 16, fontWeight: 600 }}>{r[1]}</span>
+              <span style={{ fontSize: 14, color: FX.faint }}>{r[2]}</span>
+            </div>
+          ))}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            justifyContent: "space-between",
+            marginBottom: 2,
+          }}
+        >
+          <span
+            style={{
+              fontSize: 12.5,
+              fontWeight: 700,
+              letterSpacing: 0.5,
+              textTransform: "uppercase",
+              color: FX.faint,
+            }}
+          >
+            {"Who's in"}
+          </span>
+          <span style={{ fontSize: 13.5, fontWeight: 600, color: FX.coralDeep }}>
+            2 going · 1 maybe
+          </span>
+        </div>
+        <div
+          style={{
+            background: FX.white,
+            borderRadius: 16,
+            border: `1px solid ${FX.line}`,
+            padding: "4px 16px",
+          }}
+        >
+          <AttendeeRow initial="M" bg={FX.lavender} fg={FX.plumDeep} name="Maya (you)" state="going" />
+          <div style={{ height: 1, background: FX.lineSoft }} />
+          <AttendeeRow initial="R" bg="#DDE7DA" fg="#5C7355" name="Ruth" state="going" />
+          <div style={{ height: 1, background: FX.lineSoft }} />
+          <AttendeeRow initial="S" bg="#D6E3F0" fg="#456C8C" name="Samuel" state="maybe" />
+          <div style={{ height: 1, background: FX.lineSoft }} />
+          <AttendeeRow initial="T" bg="#F0E2D6" fg="#9C6B3C" name="Theo" state="pending" />
+        </div>
+      </div>
+      <div
+        style={{
+          padding: "14px 24px 30px",
+          background: "rgba(250,249,246,0.92)",
+          backdropFilter: "blur(18px)",
+          borderTop: `1px solid ${FX.line}`,
+        }}
+      >
+        <div
+          style={{
+            fontSize: 12.5,
+            fontWeight: 700,
+            letterSpacing: 0.4,
+            textTransform: "uppercase",
+            color: FX.faint,
+            marginBottom: 10,
+          }}
+        >
+          Your answer
+        </div>
+        <div style={{ display: "flex", gap: 10 }}>
+          {rsvp.map(([label, on]) => (
+            <div
+              key={label}
+              style={{
+                flex: 1,
+                textAlign: "center",
+                padding: "13px 0",
+                borderRadius: 13,
+                fontSize: 15.5,
+                fontWeight: 700,
+                background: on ? FX.plum : FX.white,
+                color: on ? "#fff" : FX.sub,
+                border: `1.5px solid ${on ? FX.plum : FX.line}`,
+                boxShadow: on ? `0 6px 16px ${FX.plum}40` : "none",
+              }}
+            >
+              {label}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

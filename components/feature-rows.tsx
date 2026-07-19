@@ -4,6 +4,7 @@ import { PhoneMount } from "@/components/phone/phone-mount";
 import {
   CalendarSyncStates,
   MakePlan,
+  PlanDetail,
   ShiftWeek,
 } from "@/components/phone/screens";
 
@@ -52,7 +53,7 @@ function Feat({
         <PhoneMount
           scale={0.58}
           label={label}
-          className="relative z-[1]"
+          className="relative z-1"
         >
           {media}
         </PhoneMount>
@@ -89,7 +90,7 @@ export function FeatureRows() {
           }
           items={[
             "Samsung, Google & Outlook supported",
-            "Updates the moment your plans change",
+            "Re-reads your calendar each time you open the app",
             "Disconnect in one tap, any time",
           ]}
           media={<CalendarSyncStates />}
@@ -100,17 +101,38 @@ export function FeatureRows() {
           tag="From free time to plans"
           title="Turn an overlap into an actual hang"
           body={
-            "Tap the open day and the proposal writes itself — time, place, who's free. Friends RSVP in a tap, so the plan happens instead of fizzling in the chat."
+            "Tap an open day and the plan is half-written — the free window is already there. Pick a time of day, add a title or place if you like, and send it to whoever's free."
           }
           items={[
             <span key="1">
-              The overlap window <em>is</em> the invite
+              Pick a time — morning, afternoon, evening or all day
             </span>,
-            <span key="2">One-tap RSVPs &amp; live attendee list</span>,
-            <span key="3">{'A quick "anyone free Thursday?" broadcast'}</span>,
+            <span key="2">Add a title and place — both optional</span>,
+            <span key="3">
+              Everyone who&apos;s free is pre-invited; add anyone else in a tap
+            </span>,
           ]}
           media={<MakePlan />}
           label="hang:out make-a-plan screen proposing Saturday with all four friends free"
+        />
+
+        <Feat
+          flip
+          tag="Yes, maybe, can't"
+          title="Everyone answers in a tap — and you watch it live"
+          body={
+            "Friends reply right inside hang:out, and the guest list updates the moment someone responds — no chasing, no “did everyone see this?”. When it comes together it's confirmed; if it fizzles, hang:out points you at the next open night."
+          }
+          items={[
+            "Going, maybe or can't — one tap each",
+            "The attendee list updates live as replies land",
+            <span key="3">
+              Confirmed when it comes together — or the next overlap if it
+              doesn&apos;t
+            </span>,
+          ]}
+          media={<PlanDetail />}
+          label="hang:out plan screen for Saturday brunch showing live RSVPs — two going, one maybe, one invited"
         />
       </div>
     </section>
