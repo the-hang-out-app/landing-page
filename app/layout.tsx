@@ -18,6 +18,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: `hang:out — ${TAGLINE}`,
   description: DESCRIPTION,
+  applicationName: "hang:out",
+  alternates: { canonical: "/" },
   openGraph: {
     title: `hang:out — ${TAGLINE}`,
     description:
@@ -60,8 +62,13 @@ export default function RootLayout({
             __html: "document.documentElement.classList.add('js')",
           }}
         />
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
         <SiteNav />
-        <main className="flex-1">{children}</main>
+        <main id="main" className="flex-1">
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>

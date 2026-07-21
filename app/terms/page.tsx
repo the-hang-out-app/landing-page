@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Terms of Service — hang:out",
   description:
     "The terms for using hang:out: a free Android app that shows friends when you're all free, without sharing what you're busy with.",
+  alternates: { canonical: "/terms" },
 };
 
 /*

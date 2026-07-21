@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Privacy policy — hang:out",
   description:
     "How hang:out handles your data: on-device calendar reduction, free/busy only, friends-only access, and real deletion.",
+  alternates: { canonical: "/privacy" },
 };
 
 /*

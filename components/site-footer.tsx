@@ -7,11 +7,12 @@ import {
 import { LensMark } from "@/components/landing-bits";
 import { CONTACT_EMAIL, SITE_URL, SOCIAL_LINKS } from "@/lib/config";
 
+// Icons render only for accounts that exist (URL filled in lib/config.ts)
 const SOCIALS = [
   { label: "Instagram", href: SOCIAL_LINKS.instagram, Icon: InstagramLogo },
   { label: "TikTok", href: SOCIAL_LINKS.tiktok, Icon: TiktokLogo },
   { label: "X (Twitter)", href: SOCIAL_LINKS.x, Icon: XLogo },
-];
+].filter((s) => s.href);
 
 export function SiteFooter() {
   return (
@@ -43,7 +44,9 @@ export function SiteFooter() {
               <Link href="/#how">How it works</Link>
               <Link href="/#language">The grid</Link>
               <Link href="/#features">Features</Link>
+              <Link href="/#plans">Plans</Link>
               <Link href="/#privacy">Privacy</Link>
+              <Link href="/#faq">FAQ</Link>
             </div>
             <div className="col">
               <h4>Legal</h4>

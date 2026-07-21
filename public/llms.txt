@@ -1,0 +1,32 @@
+# hang:out
+
+> hang:out is a free Android app — an availability radar for friends with
+> mismatched schedules. It reads each person's calendar on their own device,
+> reduces it to plain free/busy time ranges, and shows the group the one
+> thing group chats can't: when you're all free. One tap turns that window
+> into a plan with live RSVPs.
+
+The privacy invariant: friends only ever see free or busy — never event
+names, notes, or details. Raw calendar events never leave the phone.
+Free/busy data is friends-only, enforced with row-level security; deleting
+an account immediately removes everything server-side.
+
+Status: v1 is in a closed test on Google Play; public launch next. The
+site collects a waitlist (one email at launch). iOS is planned after
+Android. Tagline: "Find the overlap."
+
+## Pages
+
+- [Home](https://the.hang-out.app/): what hang:out does — shifts and
+  calendar in, per-day free counts, one-tap plans with live RSVP,
+  rare-overlap alerts, FAQ, waitlist
+- [Privacy policy](https://the.hang-out.app/privacy): on-device calendar
+  reduction, what's stored (Supabase, EU), friends-only access, deletion
+- [Terms of Service](https://the.hang-out.app/terms)
+- [Acceptable Use Policy](https://the.hang-out.app/acceptable-use)
+- [Delete your account](https://the.hang-out.app/delete-account): in-app
+  path and email fallback
+
+## Contact
+
+- Email: hello@hang-out.app

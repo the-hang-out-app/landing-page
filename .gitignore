@@ -36,6 +36,7 @@ yarn-error.log*
 
 # internal spec / planning docs (local only, not repo content)
 /prd.md
+/RELEASE.md
 
 # vercel
 .vercel

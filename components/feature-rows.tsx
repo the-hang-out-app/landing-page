@@ -21,6 +21,7 @@ function Li({ children }: { children: ReactNode }) {
 
 function Feat({
   flip,
+  id,
   tag,
   title,
   body,
@@ -29,6 +30,7 @@ function Feat({
   label,
 }: {
   flip?: boolean;
+  id?: string;
   tag: string;
   title: string;
   body: string;
@@ -37,7 +39,7 @@ function Feat({
   label: string;
 }) {
   return (
-    <div className={`feat${flip ? " flip" : ""}`}>
+    <div className={`feat${flip ? " flip" : ""}`} id={id}>
       <div className="fcopy reveal">
         <span className="tag">{tag}</span>
         <h3>{title}</h3>
@@ -98,6 +100,7 @@ export function FeatureRows() {
         />
 
         <Feat
+          id="plans"
           tag="From free time to plans"
           title="Turn an overlap into an actual hang"
           body={

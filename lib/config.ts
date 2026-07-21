@@ -15,14 +15,14 @@ export const CONTACT_EMAIL = "hello@hang-out.app";
 export const GITHUB_ORG_URL = "https://github.com/the-hang-out-app";
 
 /**
- * Social profiles shown in the footer.
- * PLACEHOLDERS — point each at a real, existing account before launch
- * (the PRD forbids social icons for accounts that don't exist).
+ * Social profiles shown in the footer. An icon renders ONLY when its URL
+ * is non-empty — fill these in once the accounts actually exist (the PRD
+ * forbids social icons for accounts that don't exist).
  */
 export const SOCIAL_LINKS = {
-  instagram: "https://instagram.com/",
-  tiktok: "https://tiktok.com/",
-  x: "https://x.com/",
+  instagram: "",
+  tiktok: "",
+  x: "",
 };
 
 /** Set to the real Play Store listing URL at launch. */

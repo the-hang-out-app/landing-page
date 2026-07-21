@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Delete your account — hang:out",
   description:
     "How to delete your hang:out account: one tap in the app, or email us if you can't get in. Deletion is immediate and removes everything.",
+  alternates: { canonical: "/delete-account" },
 };
 
 /*

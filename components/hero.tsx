@@ -77,6 +77,22 @@ export function Hero() {
               </svg>{" "}
               Free on Android
             </span>
+            <span>
+              <svg
+                width="17"
+                height="17"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#9CA3AF"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="8.5" />
+                <path d="M12 7.5V12l3 2" />
+              </svg>{" "}
+              In closed testing — Play launch next
+            </span>
           </div>
         </div>
 

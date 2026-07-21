@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Acceptable Use Policy — hang:out",
   description:
     "The ground rules for using hang:out: what's not allowed, and what happens if someone breaks them.",
+  alternates: { canonical: "/acceptable-use" },
 };
 
 /*

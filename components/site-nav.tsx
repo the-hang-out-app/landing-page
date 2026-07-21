@@ -35,9 +35,10 @@ export function SiteNav() {
         </Link>
         <nav className="links">
           <Link href="/#how">How it works</Link>
-          <Link href="/#language">The grid</Link>
           <Link href="/#features">Features</Link>
+          <Link href="/#plans">Plans</Link>
           <Link href="/#privacy">Privacy</Link>
+          <Link href="/#faq">FAQ</Link>
         </nav>
         {IS_LAUNCHED ? (
           <a href={PLAY_STORE_URL} className="nav-cta">

@@ -2,12 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import { contactSchema } from "@/lib/contact-schema";
+import { helloEmailHtml, helloEmailText } from "@/lib/email-template";
 import { isRateLimited } from "@/lib/rate-limit";
 
 // Node runtime (not edge) for the Resend SDK (PRD §6).
 export const runtime = "nodejs";
 
-const FROM = "hang:out <no-reply@hang-out.app>";
+// Overridable for sandbox testing (unverified domains may only send from
+// onboarding@resend.dev). Production default: the brand sender.
+const FROM = process.env.RESEND_FROM ?? "hang:out <no-reply@hang-out.app>";
 
 export async function POST(request: NextRequest) {
   const ip =
@@ -56,23 +59,37 @@ export async function POST(request: NextRequest) {
   const resend = new Resend(apiKey);
 
   try {
+    // The Resend SDK reports API failures via the returned `error` field
+    // (it only throws on network problems) — check it, or failures would
+    // silently masquerade as success.
     if (intent === "waitlist") {
-      await resend.contacts.create({
+      const { error: resendError } = await resend.contacts.create({
         email,
         audienceId: process.env.RESEND_AUDIENCE_ID ?? "",
         unsubscribed: false,
       });
+      if (resendError)
+        throw new Error(`${resendError.name}: ${resendError.message}`);
     } else {
-      await resend.emails.send({
+      const { error: resendError } = await resend.emails.send({
         from: FROM,
         to: process.env.CONTACT_TO ?? "hello@hang-out.app",
         replyTo: email,
         subject: "hang:out site — new message",
-        text: message ?? "",
+        html: helloEmailHtml({ email, message: message ?? "" }),
+        text: helloEmailText({ email, message: message ?? "" }),
       });
+      if (resendError)
+        throw new Error(`${resendError.name}: ${resendError.message}`);
     }
-  } catch {
-    // Never log submitted emails (PRD §6).
+  } catch (err) {
+    // Log the reason with any email addresses redacted — never log
+    // submitted emails (PRD §6).
+    const reason = err instanceof Error ? err.message : String(err);
+    console.error(
+      "[contact] resend failure:",
+      reason.replace(/[^\s@<>]+@[^\s@<>]+/g, "<redacted>"),
+    );
     return NextResponse.json(
       { error: "Something went wrong on our end. Email us instead." },
       { status: 502 },
