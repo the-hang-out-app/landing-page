@@ -14,6 +14,24 @@ const roboto = Roboto({
 const DESCRIPTION =
   "hang:out lines up your friends' shifts, classes and 9-to-5s so you can find the time you're all free. Friends only ever see free or busy — never your event details.";
 
+/*
+ * Social preview image — kept deliberately small: WhatsApp silently drops
+ * preview images over ~300KB, which is why the original 740KB export
+ * rendered a text-only card. It's now a 173KB dithered 256-colour PNG
+ * (alpha flattened onto the brand purple — the card is fully opaque, so
+ * nothing is lost). The pristine export lives beside it as
+ * `og-image-source.png`; re-optimise from that if the artwork changes.
+ * Explicit width/height/type let scrapers lay out the large card without
+ * downloading the file first.
+ */
+const OG_IMAGE = {
+  url: "/branding/og-image-1200x630.png",
+  width: 1200,
+  height: 630,
+  alt: "hang:out — Find the night you're all free.",
+  type: "image/png",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: `hang:out — ${TAGLINE}`,
@@ -26,14 +44,14 @@ export const metadata: Metadata = {
       "The availability radar for friends who work different hours. Find the night you're all free.",
     url: SITE_URL,
     siteName: "hang:out",
-    images: ["/branding/og-image-1200x630.png"],
+    images: [OG_IMAGE],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: `hang:out — ${TAGLINE}`,
     description: "The availability radar for friends who work different hours.",
-    images: ["/branding/og-image-1200x630.png"],
+    images: [OG_IMAGE],
   },
 };
 
