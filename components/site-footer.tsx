@@ -40,7 +40,7 @@ export function SiteFooter() {
           </div>
           <div className="cols">
             <div className="col">
-              <h4>Product</h4>
+              <h3>Product</h3>
               <Link href="/#how">How it works</Link>
               <Link href="/#language">The grid</Link>
               <Link href="/#features">Features</Link>
@@ -49,14 +49,14 @@ export function SiteFooter() {
               <Link href="/#faq">FAQ</Link>
             </div>
             <div className="col">
-              <h4>Legal</h4>
+              <h3>Legal</h3>
               <Link href="/privacy">Privacy policy</Link>
               <Link href="/terms">Terms of Service</Link>
               <Link href="/delete-account">Delete your account</Link>
               <Link href="/acceptable-use">Acceptable Use Policy</Link>
             </div>
             <div className="col">
-              <h4>Contact</h4>
+              <h3>Contact</h3>
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
               <div className="socials">
                 {SOCIALS.map(({ label, href, Icon }) => (

@@ -34,7 +34,8 @@
   --lav-wash2: #e9d5ff;
   --slate: #1f2937;
   --sub: #6b7280;
-  --faint: #9ca3af;
+  /* AA contrast: ≥4.5:1 on cream and white (was #9ca3af ≈ 2.5:1) */
+  --faint: #6b7280;
   --line: rgba(31, 41, 55, 0.1);
   --line-soft: rgba(31, 41, 55, 0.06);
   --maxw: 1180px;
@@ -1242,7 +1243,7 @@ footer .top {
   gap: 40px;
   flex-wrap: wrap;
 }
-footer .col h4 {
+footer .col h3 {
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.06em;

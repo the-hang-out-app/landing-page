@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Roboto } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ScrollTop } from "@/components/scroll-top";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
@@ -91,9 +92,11 @@ export default function RootLayout({
         </main>
         <SiteFooter />
         <ScrollTop />
-        {/* Vercel Web Analytics — cookieless, so no consent banner needed
-            (PRD: no tracking cookies). No-op outside Vercel deployments. */}
+        {/* Vercel Web Analytics + Speed Insights — both cookieless, so no
+            consent banner needed (PRD: no tracking cookies). No-ops outside
+            Vercel deployments. */}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

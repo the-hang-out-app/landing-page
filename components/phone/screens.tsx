@@ -375,7 +375,8 @@ export function ShiftWeek() {
               fontSize: 14,
               fontWeight: 600,
               background: i === 0 ? FX.white : "transparent",
-              color: i === 0 ? FX.charcoal : FX.sub,
+              /* #4B5563 (not FX.sub): AA on the mist tab background */
+              color: i === 0 ? FX.charcoal : "#4B5563",
               boxShadow: i === 0 ? "0 1px 3px rgba(45,45,45,0.10)" : "none",
             }}
           >

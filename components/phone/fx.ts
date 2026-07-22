@@ -19,7 +19,8 @@ export const FX = {
   mist: "#EAEAEA",
   charcoal: "#1F2937",
   sub: "#6B7280",
-  faint: "#9CA3AF",
+  /* AA contrast on white (was #9CA3AF ≈ 2.5:1 — flagged by Lighthouse) */
+  faint: "#6B7280",
   line: "rgba(31,41,55,0.10)",
   lineSoft: "rgba(31,41,55,0.05)",
   lavWash: "#F3E8FF",
