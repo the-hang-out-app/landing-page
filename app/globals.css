@@ -44,6 +44,11 @@
 html {
   scroll-behavior: smooth;
 }
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
 body {
   margin: 0;
   background: var(--cream);
@@ -1388,4 +1393,50 @@ footer .bottom::before {
 }
 .scaler {
   transform-origin: top left;
+}
+
+/* ── scroll-to-top ────────────────────────────────────────── */
+.scrolltop {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 90;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: var(--royal);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(109, 40, 217, 0.35);
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+  transition:
+    opacity 0.3s var(--ease),
+    transform 0.3s var(--ease),
+    background 0.2s;
+}
+.scrolltop.shown {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.scrolltop:hover {
+  background: var(--royal-deep);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scrolltop {
+    transition: none;
+    transform: none;
+  }
+}
+@media (max-width: 560px) {
+  .scrolltop {
+    right: 14px;
+    bottom: 14px;
+  }
 }
