@@ -11,7 +11,7 @@ const STEPS = [
   },
   {
     title: "See everyone's free time",
-    text: "Your friends' weeks line up in one grid. The moment a day is open for the whole group, it lights up.",
+    text: "Your friends' weeks line up in one grid — the people you pick, or a group you've saved. The moment a day is open for everyone, it lights up.",
     glyph: (
       <>
         <circle cx="9" cy="8" r="3.3" />

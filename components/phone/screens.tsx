@@ -222,6 +222,246 @@ export function HomeResolved() {
   );
 }
 
+// ── Group · the crew's radar + everyone's free/busy week ────────────────────
+const CREW = [
+  { initial: "M", bg: FX.lavender, fg: FX.plumDeep, name: "Maya (you)" },
+  { initial: "S", bg: "#D6E3F0", fg: "#456C8C", name: "Samuel" },
+  { initial: "R", bg: "#DDE7DA", fg: "#5C7355", name: "Ruth" },
+  { initial: "T", bg: "#F0E2D6", fg: "#9C6B3C", name: "Theo" },
+  { initial: "A", bg: "#E9D5FF", fg: "#5B21B6", name: "Amara" },
+  { initial: "J", bg: "#E8E1D6", fg: "#7A6A55", name: "Jonah" },
+];
+
+// 1 = free · column 5 (Saturday) is the whole group's overlap
+const CREW_WEEK = [
+  [0, 1, 1, 0, 1, 1, 0],
+  [1, 0, 1, 1, 0, 1, 1],
+  [0, 1, 0, 1, 1, 1, 0],
+  [1, 0, 1, 0, 1, 1, 1],
+  [0, 0, 1, 1, 0, 1, 1],
+  [1, 1, 0, 0, 1, 1, 0],
+];
+const CREW_DAYS = ["M", "T", "W", "T", "F", "S", "S"];
+const CREW_MATCH = 5;
+
+function CrewRow({
+  person,
+  days,
+}: {
+  person: (typeof CREW)[number];
+  days: number[];
+}) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "5px 0" }}>
+      <Avatar initial={person.initial} bg={person.bg} fg={person.fg} size={26} />
+      <span
+        style={{
+          flex: 1,
+          minWidth: 0,
+          fontSize: 13.5,
+          fontWeight: 600,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        {person.name}
+      </span>
+      <div style={{ display: "flex", gap: 5 }}>
+        {days.map((free, i) => {
+          const match = free === 1 && i === CREW_MATCH;
+          return (
+            <div
+              key={i}
+              style={{
+                width: 24,
+                height: 24,
+                borderRadius: 7,
+                // Busy recedes, free is open space, the match glows.
+                background: match ? FX.coral : free ? FX.white : FX.surface,
+                border: `1px solid ${match ? FX.coral : free ? FX.line : "transparent"}`,
+                boxSizing: "border-box",
+              }}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+export function GroupWeek() {
+  const freePerDay = CREW_DAYS.map((_, c) =>
+    CREW_WEEK.reduce((n, row) => n + row[c], 0),
+  );
+  return (
+    <Screen pad={22} style={{ justifyContent: "flex-start" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+        <div
+          style={{
+            width: 38,
+            height: 38,
+            borderRadius: "50%",
+            background: FX.white,
+            border: `1px solid ${FX.line}`,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+          }}
+        >
+          <Icon
+            name="chevron"
+            size={18}
+            stroke={FX.charcoal}
+            style={{ transform: "scaleX(-1)" }}
+          />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 21, fontWeight: 700, letterSpacing: -0.4 }}>
+            Sunday League
+          </div>
+          <div style={{ fontSize: 12.5, color: FX.sub }}>6 people · all friends</div>
+        </div>
+        <div style={{ display: "flex" }}>
+          {CREW.slice(0, 4).map((p, i) => (
+            <div key={p.name} style={{ marginLeft: i ? -9 : 0 }}>
+              <Avatar initial={p.initial} bg={p.bg} fg={p.fg} size={30} ring="#fff" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ display: "flex", gap: 6, marginBottom: 16 }}>
+        {CREW_DAYS.map((d, i) => (
+          <DayBadge
+            key={i}
+            d={d}
+            n={i + 2}
+            free={freePerDay[i]}
+            total={CREW.length}
+            sel={i === CREW_MATCH}
+          />
+        ))}
+      </div>
+
+      <div
+        style={{
+          borderRadius: 20,
+          padding: "18px 20px",
+          background: `linear-gradient(150deg, ${FX.coralWash} 0%, #FFD6D6 100%)`,
+          border: `1px solid ${FX.coral}44`,
+          marginBottom: 20,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 9 }}>
+          <div
+            style={{
+              width: 20,
+              height: 20,
+              borderRadius: "50%",
+              background: FX.plum,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Icon name="check" size={12} stroke="#fff" sw={2.8} />
+          </div>
+          <span
+            style={{
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: 0.4,
+              textTransform: "uppercase",
+              color: FX.coralDeep,
+            }}
+          >
+            Best time for the group
+          </span>
+        </div>
+        <div style={{ fontSize: 23, fontWeight: 700, letterSpacing: -0.5 }}>
+          {"Saturday's wide open"}
+        </div>
+        <div style={{ fontSize: 14, color: FX.sub, margin: "3px 0 16px" }}>
+          All 6 free · Jun 7 · best window 6–11 p.m.
+        </div>
+        <PrimaryBtn style={{ height: 48, fontSize: 16 }}>
+          <Icon name="plus" size={18} stroke="#fff" sw={2.2} />
+          Make a group plan
+        </PrimaryBtn>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          alignItems: "baseline",
+          justifyContent: "space-between",
+          marginBottom: 8,
+        }}
+      >
+        <span
+          style={{
+            fontSize: 12.5,
+            fontWeight: 700,
+            letterSpacing: 0.5,
+            textTransform: "uppercase",
+            color: FX.faint,
+          }}
+        >
+          {"Everyone's week"}
+        </span>
+        <span style={{ fontSize: 12.5, fontWeight: 600, color: FX.sub }}>
+          Free / busy only
+        </span>
+      </div>
+      <div style={{ display: "flex", justifyContent: "flex-end", gap: 5, marginBottom: 2 }}>
+        {CREW_DAYS.map((d, i) => (
+          <span
+            key={i}
+            style={{
+              width: 24,
+              textAlign: "center",
+              fontSize: 11,
+              fontWeight: 700,
+              color: i === CREW_MATCH ? FX.coralDeep : FX.faint,
+            }}
+          >
+            {d}
+          </span>
+        ))}
+      </div>
+      {CREW.map((p, r) => (
+        <CrewRow key={p.name} person={p} days={CREW_WEEK[r]} />
+      ))}
+      <div style={{ marginTop: "auto", paddingTop: 16 }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            gap: 10,
+            background: FX.lavWash,
+            borderRadius: 14,
+            padding: "14px 16px",
+          }}
+        >
+          <Icon
+            name="users"
+            size={18}
+            stroke={FX.plumDeep}
+            sw={2}
+            style={{ marginTop: 1, flexShrink: 0 }}
+          />
+          <span style={{ fontSize: 13.5, lineHeight: 1.45 }}>
+            Everyone here is <b>already friends with each other</b> — up to 32
+            people in total.
+          </span>
+        </div>
+      </div>
+    </Screen>
+  );
+}
+
 // ── Shifts · manual shift week (flex-shifts.jsx) ────────────────────────────
 function ShiftBlock({ time, label, color }: { time: string; label: string; color: string }) {
   return (

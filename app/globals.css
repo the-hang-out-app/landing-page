@@ -231,6 +231,12 @@ a {
 .nav-cta:hover {
   transform: translateY(-2px);
 }
+/* six links + wordmark + CTA get tight before the links drop out at 820px */
+@media (max-width: 980px) {
+  .nav .links {
+    gap: 22px;
+  }
+}
 @media (max-width: 820px) {
   .nav .links {
     display: none;
@@ -320,6 +326,19 @@ h1.hero-h .em {
   max-width: 520px;
   margin: 22px 0 0;
   text-wrap: pretty;
+}
+.hero-crew {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 16px 0 0;
+  font-size: 15px;
+  color: var(--sub);
+  max-width: 520px;
+  text-wrap: pretty;
+}
+.hero-crew svg {
+  flex-shrink: 0;
 }
 .hero-cta {
   display: flex;
@@ -854,6 +873,107 @@ html:not(.js) .matchcallout {
   }
 }
 
+/* ── groups (reusable crews) ──────────────────────────────── */
+/* White band + the lens motif (two overlapping circles — literally the
+   group metaphor), so it separates the cream feature rows above from the
+   lavender details strip below. */
+.groups {
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cg fill='none' stroke='%236D28D9' stroke-opacity='0.045' stroke-width='1.5'%3E%3Ccircle cx='36' cy='48' r='21'/%3E%3Ccircle cx='60' cy='48' r='21'/%3E%3C/g%3E%3C/svg%3E");
+}
+.groups-main {
+  display: grid;
+  grid-template-columns: 1.02fr 0.98fr;
+  gap: 56px;
+  align-items: center;
+}
+.groups-copy h2.sec {
+  max-width: 13ch;
+}
+.glist {
+  list-style: none;
+  padding: 0;
+  margin: 26px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.glist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  font-size: 15.5px;
+  font-weight: 500;
+  text-wrap: pretty;
+}
+.glist li .ck {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--royal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.groups-cards {
+  margin-top: 64px;
+}
+.grule {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-top: 20px;
+  background: var(--lav-wash);
+  border: 1px solid rgba(109, 40, 217, 0.12);
+  border-radius: 20px;
+  padding: 26px 28px;
+}
+.grule-ic {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.grule p {
+  margin: 0;
+  max-width: 76ch;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--sub);
+  text-wrap: pretty;
+}
+.grule p + p {
+  margin-top: 10px;
+}
+.grule strong {
+  color: var(--slate);
+  font-weight: 700;
+}
+.grule em {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--royal);
+}
+@media (max-width: 900px) {
+  .groups-main {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+}
+@media (max-width: 560px) {
+  .grule {
+    flex-direction: column;
+    gap: 14px;
+    padding: 22px 20px;
+  }
+}
+
 /* ── features strip (PRD §5) ──────────────────────────────── */
 .fstrip-band {
   background: rgba(243, 232, 255, 0.5);
@@ -1101,12 +1221,19 @@ html:not(.js) .matchcallout {
   margin: 20px auto 0;
   max-width: 520px;
 }
+/* The form is a column (email row, then the optional crew chips); the
+   email input + submit button share the `.signup-row` line. */
 .signup {
   position: relative;
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 14px;
   max-width: 480px;
   margin: 36px auto 0;
+}
+.signup-row {
+  display: flex;
+  gap: 10px;
 }
 /* honeypot: visually hidden, stays within bounds (no off-screen overflow) */
 .signup .hp {
@@ -1150,7 +1277,7 @@ html:not(.js) .matchcallout {
   padding: 0 26px;
   white-space: nowrap;
 }
-.signup.hello {
+.signup.hello .signup-row {
   flex-direction: column;
 }
 .signup textarea {
@@ -1171,6 +1298,58 @@ html:not(.js) .matchcallout {
 .signup textarea:focus {
   border-color: var(--royal);
   box-shadow: 0 0 0 4px rgba(109, 40, 217, 0.12);
+}
+/* Optional "coordinating with…" signal — toggle chips, never required */
+.crewpick {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+}
+.crewpick-lab {
+  font-size: 13.5px;
+  color: var(--faint);
+}
+.crewpick-opt {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+  background: rgba(31, 41, 55, 0.06);
+  border-radius: 100px;
+  padding: 2px 8px;
+}
+.crewchips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.crewchip {
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--sub);
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 100px;
+  padding: 9px 16px;
+  cursor: pointer;
+  transition:
+    border-color 0.18s,
+    background 0.18s,
+    color 0.18s;
+}
+.crewchip:hover {
+  border-color: var(--lav);
+  color: var(--slate);
+}
+.crewchip.on {
+  background: var(--lav-wash);
+  border-color: var(--royal);
+  color: var(--royal-deep);
 }
 .signup-err {
   margin: 12px auto 0;
@@ -1221,7 +1400,7 @@ html:not(.js) .matchcallout {
   margin-top: 18px;
 }
 @media (max-width: 560px) {
-  .signup {
+  .signup-row {
     flex-direction: column;
   }
   .signup input,

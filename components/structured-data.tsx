@@ -22,7 +22,7 @@ const app = {
   operatingSystem: "Android",
   applicationCategory: "SocialNetworkingApplication",
   description:
-    "An availability radar for friends with mismatched schedules: see the night you're all free — friends only ever see free or busy, never event details.",
+    "An availability radar for friends with mismatched schedules: see the night you're all free, one-on-one or in a saved group of up to 32 people — friends only ever see free or busy, never event details.",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   author: { "@id": `${SITE_URL}/#org` },
   url: SITE_URL,

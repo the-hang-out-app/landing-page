@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
+import { Resend, type ErrorResponse } from "resend";
 import { z } from "zod";
 import { contactSchema } from "@/lib/contact-schema";
 import { helloEmailHtml, helloEmailText } from "@/lib/email-template";
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { intent, email, message, company } = parsed.data;
+  const { intent, email, message, crew, company } = parsed.data;
 
   // Honeypot: pretend success, do nothing.
   if (company) {
@@ -63,11 +63,34 @@ export async function POST(request: NextRequest) {
     // (it only throws on network problems) — check it, or failures would
     // silently masquerade as success.
     if (intent === "waitlist") {
-      const { error: resendError } = await resend.contacts.create({
-        email,
-        audienceId: process.env.RESEND_AUDIENCE_ID ?? "",
-        unsubscribed: false,
-      });
+      const audienceId = process.env.RESEND_AUDIENCE_ID ?? "";
+      let resendError: ErrorResponse | null = null;
+
+      // The optional "coordinating with…" signal rides along as a Resend
+      // contact property, which has to be created in the dashboard first —
+      // Resend rejects the whole write if the key is unknown. A missing
+      // property must never cost us a signup, so fall back to a plain contact.
+      if (crew) {
+        resendError = (
+          await resend.contacts.create({
+            email,
+            audienceId,
+            unsubscribed: false,
+            properties: { crew },
+          })
+        ).error;
+        if (resendError)
+          console.warn(
+            "[contact] crew property rejected, retrying without it:",
+            resendError.name,
+          );
+      }
+      if (!crew || resendError) {
+        resendError = (
+          await resend.contacts.create({ email, audienceId, unsubscribed: false })
+        ).error;
+      }
+
       if (resendError)
         throw new Error(`${resendError.name}: ${resendError.message}`);
     } else {
