@@ -114,6 +114,9 @@ export function FeatureRows() {
             <span key="3">
               Everyone who&apos;s free is pre-invited; add anyone else in a tap
             </span>,
+            <span key="4">
+              Or scope it to a saved group — the whole crew is invited in one go
+            </span>,
           ]}
           media={<MakePlan />}
           label="hang:out make-a-plan screen proposing Saturday with all four friends free"

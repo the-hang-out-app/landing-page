@@ -18,6 +18,18 @@ export const FAQ_ITEMS: FaqItem[] = [
     a: "No. Friends only ever see free or busy. Your events are reduced to plain time ranges on your own device — names, notes and details never leave your phone.",
   },
   {
+    q: "Can I make groups, or is it one friend at a time?",
+    a: "Both. Add friends one-on-one, or save a group of up to 32 people (you + 31) and coordinate the whole crew at once.",
+  },
+  {
+    q: "Who can see my schedule in a group?",
+    a: "Only that group's members — who are all already your friends — and they still see only free/busy, never event details.",
+  },
+  {
+    q: "Do I have to be friends with everyone in a group?",
+    a: "Yes. Like a group chat, everyone in a hang:out group is friends with each other — you can only add someone already friends with everyone in the group.",
+  },
+  {
     q: "What does hang:out cost?",
     a: "Nothing. hang:out is free.",
   },

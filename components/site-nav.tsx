@@ -37,6 +37,7 @@ export function SiteNav() {
           <Link href="/#how">How it works</Link>
           <Link href="/#features">Features</Link>
           <Link href="/#plans">Plans</Link>
+          <Link href="/#groups">Groups</Link>
           <Link href="/#privacy">Privacy</Link>
           <Link href="/#faq">FAQ</Link>
         </nav>

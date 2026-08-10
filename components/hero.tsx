@@ -21,6 +21,25 @@ export function Hero() {
               "Different jobs, different hours. hang:out lines up everyone's shifts, classes and 9-to-5s — so you can finally find the night you're all free."
             }
           </p>
+          <p className="hero-crew reveal d2">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#6D28D9"
+              strokeWidth="1.7"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="9" cy="8" r="3.3" />
+              <path d="M3.4 19.2c0-3.1 2.5-5.2 5.6-5.2s5.6 2.1 5.6 5.2" />
+              <path d="M16.2 5.1a3.3 3.3 0 0 1 0 6.1M17.8 14.1c2.2.5 3.6 2.3 3.6 4.9" />
+            </svg>
+            Friend by friend — or save your regular crew as a group, up to 32
+            people.
+          </p>
           <div className="hero-cta reveal d3">
             {IS_LAUNCHED ? (
               <PlayBadge />

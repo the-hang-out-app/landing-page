@@ -53,11 +53,13 @@ Without `RESEND_API_KEY`, form submissions are simulated locally so the UI can b
 | `RESEND_FROM` | Optional sender override (sandbox testing only) |
 | `NEXT_PUBLIC_LAUNCHED` | `"true"` swaps the waitlist CTA for the Play badge |
 
+The waitlist form also posts an **optional** `crew` signal (`"friends"` / `"group"`) from its "Coordinating with…" chips, stored as a Resend **contact property**. Create a string property keyed `crew` under Contacts → Properties to keep it; without it signups still succeed and the value is simply dropped. 📊
+
 ## 🗂️ Structure
 
-- `app/page.tsx` — the one-scroll home: hero → trust strip → how it works → the grid → feature rows (shifts · calendar · plans · RSVP) → features strip → privacy → FAQ → waitlist
+- `app/page.tsx` — the one-scroll home: hero → trust strip → how it works → the grid → feature rows (shifts · calendar · plans · RSVP) → groups → features strip → privacy → FAQ → waitlist
 - `components/` — section components + shared bits (nav, footer, reveal observer, week grid, signup form)
-- `components/phone/` — the in-frame app mockups (device shell + five app screens)
+- `components/phone/` — the in-frame app mockups (device shell + six app screens)
 - `app/privacy` · `app/terms` · `app/delete-account` · `app/acceptable-use` — legal routes; **URLs must stay stable once submitted to the Play console** ⚠️
 - `app/api/contact` — Resend route handler: zod validation, honeypot, per-IP rate limit, branded email template
 - `lib/config.ts` — site constants + `IS_LAUNCHED` flag

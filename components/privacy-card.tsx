@@ -23,6 +23,11 @@ export function PrivacyCard() {
                 nothing else. Event names, places and details never leave your
                 phone. Contacts are matched on-device and never uploaded.
               </p>
+              <p>
+                {
+                  "Group or one-on-one, the rule never changes: friends see free or busy, never what you're doing. A group is only people who are already friends with each other, so it adds nothing new to what anyone can see."
+                }
+              </p>
               <Link href="/privacy" className="plink">
                 Read the full privacy policy
               </Link>

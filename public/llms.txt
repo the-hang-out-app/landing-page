@@ -6,8 +6,16 @@
 > thing group chats can't: when you're all free. One tap turns that window
 > into a plan with live RSVPs.
 
+Friends can be added one-on-one, or saved as a named, reusable group of up
+to 32 people (you + 31 friends). Everyone in a group is already friends with
+each other — like a group chat, you can only add someone already friends with
+everyone in the group — so a group adds no new privacy surface. Group members
+see the group's free-day counts, everyone's free/busy week, and group-scoped
+plans with live RSVP.
+
 The privacy invariant: friends only ever see free or busy — never event
-names, notes, or details. Raw calendar events never leave the phone.
+names, notes, or details. This is identical in a group and one-on-one.
+Raw calendar events never leave the phone.
 Free/busy data is friends-only, enforced with row-level security; deleting
 an account immediately removes everything server-side.
 
@@ -19,7 +27,7 @@ Android. Tagline: "Find the overlap."
 
 - [Home](https://the.hang-out.app/): what hang:out does — shifts and
   calendar in, per-day free counts, one-tap plans with live RSVP,
-  rare-overlap alerts, FAQ, waitlist
+  groups of up to 32, rare-overlap alerts, FAQ, waitlist
 - [Privacy policy](https://the.hang-out.app/privacy): on-device calendar
   reduction, what's stored (Supabase, EU), friends-only access, deletion
 - [Terms of Service](https://the.hang-out.app/terms)

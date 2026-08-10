@@ -2,6 +2,7 @@ import { Faq } from "@/components/faq";
 import { FeatureRows } from "@/components/feature-rows";
 import { FeaturesStrip } from "@/components/features-strip";
 import { FinalCta } from "@/components/final-cta";
+import { GroupsSection } from "@/components/groups-section";
 import { Hero } from "@/components/hero";
 import { HowItWorks } from "@/components/how-it-works";
 import { LanguageSection } from "@/components/language-section";
@@ -18,6 +19,7 @@ export default function HomePage() {
       <HowItWorks />
       <LanguageSection />
       <FeatureRows />
+      <GroupsSection />
       <FeaturesStrip />
       <PrivacyCard />
       <Faq />

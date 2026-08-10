@@ -6,6 +6,18 @@ import { contactSchema } from "@/lib/contact-schema";
 
 const JOINED_KEY = "hangout-waitlist-joined";
 
+/**
+ * Optional demand signal — are people here for a couple of friends or a
+ * whole group? Toggle buttons (not radios) so a pick can be undone, and
+ * never required: the form submits with `crew` unset if it's ignored.
+ */
+const CREW_OPTIONS = [
+  { value: "friends", label: "A few friends" },
+  { value: "group", label: "A whole group (up to 32)" },
+] as const;
+
+type Crew = (typeof CREW_OPTIONS)[number]["value"];
+
 const emptySubscribe = () => () => {};
 function readJoined() {
   try {
@@ -24,6 +36,7 @@ function readJoined() {
  */
 export function SignupForm() {
   const [intent, setIntent] = useState<"waitlist" | "hello">("waitlist");
+  const [crew, setCrew] = useState<Crew | null>(null);
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const [error, setError] = useState<string | null>(null);
   const okRef = useRef<HTMLParagraphElement>(null);
@@ -51,6 +64,7 @@ export function SignupForm() {
       email: String(form.get("email") ?? ""),
       message:
         intent === "hello" ? String(form.get("message") ?? "") : undefined,
+      crew: intent === "waitlist" && crew ? crew : undefined,
       company: String(form.get("company") ?? ""),
     };
 
@@ -127,49 +141,78 @@ export function SignupForm() {
         onSubmit={handleSubmit}
         noValidate
       >
-        <input
-          type="email"
-          name="email"
-          placeholder="you@email.com"
-          aria-label="Email address"
-          aria-invalid={Boolean(error)}
-          autoComplete="email"
-          inputMode="email"
-          enterKeyHint={isHello ? "next" : "send"}
-          required
-        />
-        {isHello && (
-          <textarea
-            name="message"
-            placeholder="Your message…"
-            aria-label="Message"
-            rows={4}
-            enterKeyHint="enter"
+        <div className="signup-row">
+          <input
+            type="email"
+            name="email"
+            placeholder="you@email.com"
+            aria-label="Email address"
+            aria-invalid={Boolean(error)}
+            autoComplete="email"
+            inputMode="email"
+            enterKeyHint={isHello ? "next" : "send"}
             required
           />
+          {isHello && (
+            <textarea
+              name="message"
+              placeholder="Your message…"
+              aria-label="Message"
+              rows={4}
+              enterKeyHint="enter"
+              required
+            />
+          )}
+          {/* Honeypot — hidden from real users, tempting to bots. Uses a
+              clip-based visually-hidden pattern (not left:-9999px, which can
+              trigger horizontal overflow on mobile browsers). */}
+          <input
+            type="text"
+            name="company"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="hp"
+          />
+          <button
+            className="btn btn-primary"
+            type="submit"
+            disabled={status === "sending"}
+          >
+            {status === "sending"
+              ? "Sending…"
+              : isHello
+                ? "Send message"
+                : "Get early access"}
+          </button>
+        </div>
+        {!isHello && (
+          <div
+            className="crewpick"
+            role="group"
+            aria-labelledby="crewpick-label"
+          >
+            <span id="crewpick-label" className="crewpick-lab">
+              {"Coordinating with… "}
+              <span className="crewpick-opt">optional</span>
+            </span>
+            <div className="crewchips">
+              {CREW_OPTIONS.map((o) => (
+                <button
+                  key={o.value}
+                  type="button"
+                  className={`crewchip${crew === o.value ? " on" : ""}`}
+                  aria-pressed={crew === o.value}
+                  onClick={() =>
+                    setCrew((c) => (c === o.value ? null : o.value))
+                  }
+                >
+                  {o.label}
+                </button>
+              ))}
+            </div>
+          </div>
         )}
-        {/* Honeypot — hidden from real users, tempting to bots. Uses a
-            clip-based visually-hidden pattern (not left:-9999px, which can
-            trigger horizontal overflow on mobile browsers). */}
-        <input
-          type="text"
-          name="company"
-          tabIndex={-1}
-          autoComplete="off"
-          aria-hidden="true"
-          className="hp"
-        />
-        <button
-          className="btn btn-primary"
-          type="submit"
-          disabled={status === "sending"}
-        >
-          {status === "sending"
-            ? "Sending…"
-            : isHello
-              ? "Send message"
-              : "Get early access"}
-        </button>
       </form>
       {error && (
         <p className="signup-err" role="alert" ref={errRef} tabIndex={-1}>
