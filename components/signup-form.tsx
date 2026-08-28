@@ -114,7 +114,9 @@ export function SignupForm() {
         <p className="signup-ok" ref={okRef} tabIndex={-1}>
           {status === "sent" && intent === "hello"
             ? "Got it — we'll get back to you soon."
-            : "You're on the list — we'll only email you when it matters."}
+            : status === "sent"
+              ? "You're on the list — check your inbox for a confirmation."
+              : "You're on the list — we'll only email you when it matters."}
         </p>
         {status !== "sent" && (
           <p className="signup-fine">
