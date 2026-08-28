@@ -2,7 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend, type ErrorResponse } from "resend";
 import { z } from "zod";
 import { contactSchema } from "@/lib/contact-schema";
-import { helloEmailHtml, helloEmailText } from "@/lib/email-template";
+import {
+  helloEmailHtml,
+  helloEmailText,
+  waitlistEmailHtml,
+  waitlistEmailText,
+} from "@/lib/email-template";
+import { CONTACT_EMAIL } from "@/lib/config";
 import { isRateLimited } from "@/lib/rate-limit";
 
 // Node runtime (not edge) for the Resend SDK (PRD §6).
@@ -93,6 +99,32 @@ export async function POST(request: NextRequest) {
 
       if (resendError)
         throw new Error(`${resendError.name}: ${resendError.message}`);
+
+      // Confirmation to the subscriber — catches typo'd addresses, which
+      // are otherwise lost in silence. The contact row is already stored
+      // and IS the signup, so nothing here may turn a saved signup into an
+      // error: swallow both the returned `error` and a thrown network
+      // failure, and log neither the address nor the reason verbatim.
+      try {
+        const { error: confirmError } = await resend.emails.send({
+          from: FROM,
+          to: email,
+          replyTo: CONTACT_EMAIL,
+          subject: "You're on the hang:out list",
+          html: waitlistEmailHtml(),
+          text: waitlistEmailText(),
+        });
+        if (confirmError)
+          console.warn(
+            "[contact] waitlist confirmation not sent:",
+            confirmError.name,
+          );
+      } catch (err) {
+        console.warn(
+          "[contact] waitlist confirmation not sent:",
+          err instanceof Error ? err.name : "unknown",
+        );
+      }
     } else {
       const { error: resendError } = await resend.emails.send({
         from: FROM,
